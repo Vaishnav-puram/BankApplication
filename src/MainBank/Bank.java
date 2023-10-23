@@ -6,6 +6,7 @@ public class Bank {
     private String name;
     private String acc;
     private double bal;
+    public enum AccType{SAVINGS,CURRENT};
 
     public Bank(String name, String acc, double bal) {
         this.id = idcounter++;
