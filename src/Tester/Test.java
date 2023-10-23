@@ -1,11 +1,13 @@
 package Tester;
 
+import Exceptions.AccTypeMissMatch;
+import Exceptions.AccountNotFound;
 import MainBank.Bank;
 
 import java.util.Scanner;
 
 public class Test {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AccTypeMissMatch, AccountNotFound {
         Scanner sc=new Scanner(System.in);
         Bank[] banks=new Bank[50];
         int index=0;
@@ -31,6 +33,17 @@ public class Test {
                     name=sc.nextLine();
                     System.out.println("Enter type of A/C  (Savings/Current):");
                     acc=sc.nextLine();
+                    flag=false;
+                    for (Bank.AccType bc:Bank.AccType.values()){
+                        if (bc.toString().equalsIgnoreCase(acc)){
+                            flag=true;
+                        }
+                    }
+                    if (!flag){
+                        //exception
+                        throw new AccTypeMissMatch("Please select from the options above!");
+                       // System.out.println("Please select from the options above!");
+                    }
                     System.out.println("Deposit initial balance:");
                     bal=sc.nextDouble();
                     b=new Bank(name,acc,bal);
@@ -56,7 +69,8 @@ public class Test {
                         }
                     }
                     if (!flag){
-                        System.out.println("Account not found!");
+//                        System.out.println("Account not found!");
+                        throw new AccountNotFound("Account not found!");
                     }
 
                     break;
@@ -72,7 +86,8 @@ public class Test {
                         }
                     }
                     if (!flag){
-                        System.out.println("Account not found!");
+//                        System.out.println("Account not found!");
+                        throw new AccountNotFound("Account not found!");
                     }
                     break;
                 case 5:
@@ -92,8 +107,9 @@ public class Test {
                         }
                     }
                     if(!flag){
-                        System.out.println("Source Account not found !");
-                        break;
+//                        System.out.println("Source Account not found !");
+                        throw new AccountNotFound("Source Account not found!");
+                        //break;
                     }
                     for(int i=0;i<index;i++){
                         if(banks[i].getId()==id2){
@@ -106,8 +122,9 @@ public class Test {
                         }
                     }
                     if(!flag1){
-                        System.out.println("Destination Account not found !");
-                        break;
+//                        System.out.println("Destination Account not found !");
+//                        break;
+                        throw new AccountNotFound("Receiver Account not found!");
                     }
                     break;
                 case 6:
